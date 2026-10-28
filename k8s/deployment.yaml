@@ -1,0 +1,26 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-k8s-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: student-k8s-demo
+  template:
+    metadata:
+      labels:
+        app: student-k8s-demo
+    spec:
+      containers:
+        - name: student-k8s-demo
+          image: rishabesh24/student-k8s-demo:ed55656243813ff0b1f00fa539fa4d5c0cc8ba47
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 5
